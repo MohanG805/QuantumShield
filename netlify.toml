@@ -1,0 +1,16 @@
+[build]
+  base = "frontend"
+  command = "npm install && npm run build"
+  publish = "dist"
+
+# Redirect all routes to index.html except for files that exist
+# This allows SPA routing while preserving static assets
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
+  force = false  # Don't force redirect if file exists
+
+[build.environment]
+  NODE_VERSION = "20.19.0"
+

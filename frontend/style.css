@@ -1,0 +1,121 @@
+:root{
+  --bg1:#0f1724;
+  --bg2:#0b2a4a;
+  --card: rgba(255,255,255,0.04);
+  --glass: rgba(255,255,255,0.06);
+  --accent:#6ee7b7;
+  --primary:#60a5fa;
+  --muted:rgba(255,255,255,0.65);
+  --glass-border: rgba(255,255,255,0.06);
+  --card-radius:14px;
+}
+
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap');
+
+*{box-sizing:border-box}
+html,body{height:100%}
+body{
+  margin:0;font-family:'Poppins','Inter',Segoe UI,Roboto,system-ui,-apple-system,"Helvetica Neue",Arial,sans-serif;
+  color:var(--muted);
+  background: linear-gradient(120deg,var(--bg1),var(--bg2));
+  background-size:200% 200%;
+  background-attachment:fixed;
+  animation: bgShift 12s ease-in-out infinite;
+  min-height:100vh;
+  -webkit-font-smoothing:antialiased;
+}
+
+@keyframes bgShift{0%{background-position:0% 50%}50%{background-position:100% 50%}100%{background-position:0% 50%}}
+
+.site-header{padding:28px 28px 8px 28px;color:white;text-align:center}
+.brand{display:flex;flex-direction:column;align-items:center;gap:0;justify-content:center}
+.logo-img{width:120px;height:auto;filter:drop-shadow(0 4px 12px rgba(0,0,0,0.3));margin-bottom:8px}
+.logo{width:44px;height:44px;filter:drop-shadow(0 6px 18px rgba(0,0,0,0.6));
+  display:inline-block;border-radius:50%;background:conic-gradient(from 180deg at 50% 50%, #7dd3fc, #60a5fa, #6ee7b7, #a78bfa);
+  box-shadow:0 6px 18px rgba(0,0,0,0.35);transform-origin:center center;animation:logoFloat 6s ease-in-out infinite;
+}
+
+@keyframes logoFloat{0%{transform:translateY(0) rotate(0deg)}50%{transform:translateY(-4px) rotate(6deg)}100%{transform:translateY(0) rotate(0deg)}}
+.site-header h1{margin:6px 0 0 0;font-size:36px;letter-spacing:0.5px;font-weight:700;background:linear-gradient(135deg, #60a5fa, #6ee7b7);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.tag{margin:12px 0 0 0;color:rgba(255,255,255,0.85);font-size:16px;font-weight:500;letter-spacing:0.2px}
+
+.container{display:flex;flex-direction:column;gap:20px;padding:20px;max-width:900px;margin:20px auto}
+.container #keys-card{margin:0 auto;width:100%;max-width:800px}
+.send-recv-wrapper{display:grid;grid-template-columns:1fr 1fr;gap:20px;width:100%;max-width:800px;margin:10px auto 0}
+.card{background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));border:1px solid var(--glass-border);padding:18px;border-radius:var(--card-radius);backdrop-filter:blur(6px);box-shadow:0 8px 30px rgba(2,6,23,0.6);transform:translateY(0);transition:transform .36s cubic-bezier(.2,.9,.2,1),box-shadow .2s}
+.card:hover{transform:translateY(-6px);box-shadow:0 18px 36px rgba(2,6,23,0.65)}
+.card h2{color:white;margin-top:0;margin-bottom:16px;font-family:ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";font-size:24px;font-weight:700;line-height:32px;letter-spacing:0.3px;background:linear-gradient(135deg, #60a5fa, #6ee7b7);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.form-row{display:flex;flex-direction:column;gap:12px;margin-bottom:12px;width:100%}
+.form-row label{display:flex;flex-direction:column;font-size:13px;color:var(--muted);font-weight:500;letter-spacing:0.3px;min-width:auto}
+.txt{padding:16px 12px;border-radius:8px;border:1px solid rgba(255,255,255,0.06);background:transparent;color:white;outline:none;transition:box-shadow .18s,border-color .18s,background .18s;width:100%;font-family:'Inter',sans-serif;font-size:14px;min-height:50px}
+.txt::placeholder{color:rgba(255,255,255,0.45);font-style:italic;font-weight:500;letter-spacing:0.2px}
+.txt:focus{box-shadow:0 6px 20px rgba(96,165,250,0.12);border-color:rgba(96,165,250,0.18)}
+
+.drop-zone{border:2px dashed rgba(110,231,183,0.35);border-radius:12px;padding:28px 20px;text-align:center;cursor:pointer;transition:all .24s;background:rgba(110,231,183,0.04);margin-bottom:14px}
+.drop-zone:hover{border-color:rgba(110,231,183,0.6);background:rgba(110,231,183,0.08)}
+.drop-zone.drag-over{border-color:var(--accent);background:rgba(110,231,183,0.12);box-shadow:0 8px 24px rgba(110,231,183,0.1)}
+.drop-icon{width:48px;height:48px;color:var(--accent);margin-bottom:8px;filter:drop-shadow(0 2px 4px rgba(0,0,0,0.15))}
+.drop-title{margin:8px 0 4px 0;color:white;font-weight:500;font-size:14px}
+.drop-hint{margin:0;color:var(--muted);font-size:12px}
+.file-input-hidden{display:none}
+
+/* selected file list within send card */
+.file-list{margin-top:10px;display:flex;flex-direction:column;gap:8px}
+.file-item{display:flex;align-items:center;justify-content:space-between;background:rgba(255,255,255,0.03);padding:8px 10px;border-radius:8px;border:1px solid rgba(255,255,255,0.04);font-size:13px;color:var(--muted)}
+.file-meta{display:flex;gap:10px;align-items:center;min-width:0}
+.file-name{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:420px}
+.file-size{color:rgba(255,255,255,0.6);font-size:12px}
+.file-actions{display:flex;gap:8px;align-items:center}
+.remove-btn{background:transparent;border:1px solid rgba(255,255,255,0.06);color:var(--muted);padding:6px 8px;border-radius:8px;cursor:pointer;font-size:12px}
+.remove-btn:hover{box-shadow:0 6px 12px rgba(0,0,0,0.3);background:rgba(255,255,255,0.02)}
+
+.btn-row{display:flex;gap:10px;flex-wrap:wrap;width:100%}
+.btn{padding:14px 14px;border-radius:10px;border:0;background:rgba(255,255,255,0.05);color:var(--muted);cursor:pointer;transition:transform .12s,box-shadow .12s,background .12s;flex:1;min-width:120px;min-height:50px;font-weight:600;font-family:'Poppins',sans-serif;letter-spacing:0.3px;font-size:13px}
+.btn:hover{transform:translateY(-3px);box-shadow:0 10px 24px rgba(2,6,23,0.6)}
+.btn:active{transform:translateY(0)}
+.btn.primary{background:linear-gradient(90deg,var(--primary),#7dd3fc);color:#03244b}
+.btn.primary:hover{box-shadow:0 0 20px rgba(96,165,250,0.5),0 10px 24px rgba(2,6,23,0.6)}
+.btn.accent{background:linear-gradient(90deg,var(--accent),#34d399);color:#03322b}
+.btn.accent:hover{box-shadow:0 0 20px rgba(110,231,183,0.5),0 10px 24px rgba(2,6,23,0.6)}
+
+.tiny{padding:6px 8px;border-radius:8px;font-size:12px}
+
+.output{
+  background:linear-gradient(180deg, rgba(0,0,0,0.18), rgba(255,255,255,0.02));
+  padding:14px;
+  border-radius:8px;
+  color:#cfecec;
+  font-family:ui-monospace,SFMono-Regular,Menlo,monospace;
+  font-size:13px;
+  min-height:48px;
+  max-height:260px;
+  width:100%;
+  box-sizing:border-box;
+  overflow:auto; /* allow scrolling for very long keys */
+  white-space:pre-wrap; /* wrap long lines */
+  word-break:break-word;
+  overflow-wrap:anywhere;
+}
+
+.output.pulse{box-shadow:0 10px 30px rgba(96,165,250,0.09);border-color:rgba(96,165,250,0.14);transform:translateY(-3px);transition:transform .28s,box-shadow .28s}
+
+.debug{position:fixed;left:12px;bottom:12px;width:320px;max-height:50vh;overflow:auto;background:rgba(6,10,18,0.6);border-radius:10px;padding:10px;border:1px solid rgba(255,255,255,0.04);color:#cfd8dc;backdrop-filter:blur(6px);z-index:9999}
+.debug-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
+.debug-log{font-family:monospace;font-size:12px;max-height:40vh;overflow:auto}
+.debug.collapsed .debug-log{display:none}
+
+/* small responsive tweaks */
+@media (max-width:600px){
+  .site-header{padding-left:14px}
+  .tag{margin-left:0}
+  .container{padding:12px;max-width:100%}
+  .container #keys-card{max-width:100%}
+  .form-row{flex-direction:column}
+  .form-row label{min-width:auto}
+  .send-recv-wrapper{grid-template-columns:1fr}
+}
+
+/* subtle entrance animation */
+@keyframes popIn{from{opacity:0;transform:translateY(10px) scale(.995)}to{opacity:1;transform:none}}
+.card{animation:popIn .45s ease both}
+

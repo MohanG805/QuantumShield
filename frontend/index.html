@@ -1,0 +1,118 @@
+<!doctype html>
+<html>
+
+<head>
+  <meta charset="utf-8" />
+  <title>Secure File Share</title>
+  <!-- <link rel="icon" type="image/svg+xml" href="/favicon.svg"> -->
+  <link rel="stylesheet" href="/style.css">
+  <link rel="shortcut icon" href="svg-export-4x2.png" type="image/x-icon">
+</head>
+
+<body>
+  <header class="site-header">
+    <div class="brand">
+      <!-- <svg class="logo" viewBox="0 0 24 24" aria-hidden="true"><defs>
+        
+      </defs>
+        <circle cx="12" cy="12" r="10" fill="url(#g)"></circle>
+      </svg> -->
+      <img src="svg-export-4x1.png" alt="QuantumShield Logo" class="logo-img" />
+      <h1>QuantumShield File Share</h1>
+    </div>
+    <p class="tag">End-to-end encrypted file sharing platform</p>
+  </header>
+
+  <main class="container">
+    <section class="card" id="keys-card">
+      <h2>Keys & Identity</h2>
+      <div class="form-row">
+        <label>User id: <input id="userId" placeholder="Ex: Alice" class="txt"></label>
+        <label>Password: <input id="passphrase" type="password" class="txt" placeholder="Enter password"></label>
+      </div>
+      <div class="btn-row">
+        <button id="genKeyBtn" class="btn primary">Generate Keypair</button>
+        <button id="uploadPubBtn" class="btn">Upload Public Key</button>
+        <button id="fetchPubBtn" class="btn">Fetch Public Key</button>
+      </div>
+      <pre id="keyOutput" class="output" aria-live="polite"></pre>
+    </section>
+
+    <div class="send-recv-wrapper">
+      <section class="card" id="send-card">
+        <h2>Send Encrypted File</h2>
+        <div class="form-row">
+          <label>Recipients: <input id="recipients" class="txt" placeholder="Enter the Reciever's userId"></label>
+        </div>
+        <div class="drop-zone" id="dropZone" tabindex="0" role="button" aria-label="File upload drop zone. Press Enter or Space to open file picker.">
+          <svg class="drop-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg>
+          <p class="drop-title">Drag & drop your file here</p>
+          <p class="drop-hint">or click to browse (or press Enter)</p>
+          <input id="fileInput" type="file" class="file-input-hidden" multiple>
+        </div>
+        <div id="fileList" class="file-list" aria-live="polite"></div>
+        <div class="btn-row">
+          <button id="sendBtn" class="btn accent">Encrypt & Send File</button>
+        </div>
+        <pre id="fileOutput" class="output"></pre>
+      </section>
+
+      <section class="card" id="recv-card">
+        <h2>Receive & Decrypt File</h2>
+        <div class="form-row">
+          <label>Your User id: <input id="downloadUserId" placeholder="Ex: Alice" class="txt"></label>
+          <label>Your Password: <input id="downloadPassphrase" type="password" class="txt" placeholder="Enter password"></label>
+          <label>File ID: <input id="fileId" placeholder="Paste file ID here" class="txt"></label>
+        </div>
+        <div class="btn-row">
+          <button id="fetchFileBtn" class="btn">Fetch & Decrypt File</button>
+        </div>
+        <pre id="downloadOutput" class="output"></pre>
+      </section>
+    </div>
+  </main>
+
+  <!-- Inline debug UI: collapsible logger -->
+  <div id="client-debug" class="debug">
+    <div class="debug-head">
+      <strong>Client status</strong>
+      <div>
+        <button id="client-debug-toggle" class="tiny">▾</button>
+        <button id="client-debug-clear" class="tiny">Clear</button>
+      </div>
+    </div>
+    <div id="client-debug-log" class="debug-log">(logs appear here)</div>
+  </div>
+  <p style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; text-align: center; padding-bottom: 10px; font-size: small; ">Your files are secured and safe!</p>
+
+  <script>
+    // simple on-page logger to help debug when devtools aren't visible
+    (function () {
+      const logEl = document.getElementById('client-debug-log');
+      function append(msg) {
+        const line = document.createElement('div');
+        line.textContent = (new Date()).toLocaleTimeString() + ' - ' + msg;
+        logEl.appendChild(line);
+        logEl.scrollTop = logEl.scrollHeight;
+      }
+      document.getElementById('client-debug-clear').addEventListener('click', () => logEl.innerHTML = '');
+      const dbgToggle = document.getElementById('client-debug-toggle');
+      dbgToggle && dbgToggle.addEventListener('click', () => document.getElementById('client-debug').classList.toggle('collapsed'));
+      append('inline script running');
+
+      // quick DOM checks
+      append('buttons: gen=' + !!document.getElementById('genKeyBtn') + ' upload=' + !!document.getElementById('uploadPubBtn') + ' fetch=' + !!document.getElementById('fetchPubBtn'));
+      // try to fetch the module file to see if it's served
+      fetch('/src/keys.js', { method: 'GET' }).then(r => {
+        append('/src/keys.js status=' + r.status);
+        if (!r.ok) append('keys.js not served (check dev server)');
+      }).catch(e => append('fetch error: ' + e.message));
+    })();
+  </script>
+    <script src="/script.js"></script>
+    <script type="module" src="/src/keys.js"></script>
+    <script type="module" src="/src/upload.js"></script>
+    <script type="module" src="/src/download.js"></script>
+</body>
+
+</html>
